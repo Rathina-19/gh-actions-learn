@@ -21,12 +21,12 @@ jobs:
       - name: Get code
         uses: actions/checkout@v4
       - name: Load and Cache dependencies
-        id: Load
+        id: load
         uses: ./.github/actions/cache-deps
         with:
           catching: 'false'
       - name: Ouput Info
-        run: echo 'Ouput Info ${{ Load.ouputs.used-cache }}'
+        run: echo 'Ouput Info ${{ steps.load.ouputs.used-cache }}'
       - name: Test code
         id: run-tests
         run: npm run test
