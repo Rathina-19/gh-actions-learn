@@ -1,12 +1,16 @@
 name: 'Cache dependencies'
 description: 'Caching and Loading dependencies'
-runs:
-  using: 'composite'
 inputs:
   caching:
     description: 'Caching required?'
     required: true
     type: string
+outputs: 
+  used-cache:
+    description: 'Outputing Value'
+    value: ${{ steps.dependency.outputs.installed }}
+runs:
+  using: 'composite'
   steps:
     - name: Cache dependencies
       id: cache
@@ -16,6 +20,9 @@ inputs:
         path: node_modules
         key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
     - name: Install dependencies
+      id: dependency
       if: steps.cache.outputs.cache-hit != 'true' || inputs.caching == 'true'
-      run: npm ci
+      run: |
+        npm ci
+        echo 'installed = ${{ inputs.caching}}' >> GITHUB_OUTPUT
       shell: bash
