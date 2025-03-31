@@ -2,14 +2,20 @@ name: 'Cache dependencies'
 description: 'Caching and Loading dependencies'
 runs:
   using: 'composite'
+inputs:
+  caching:
+    description: 'Caching required?'
+    required: true
+    type: string
   steps:
     - name: Cache dependencies
       id: cache
+      if: inputs.caching == 'true'
       uses: actions/cache@v4
       with:
         path: node_modules
         key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
     - name: Install dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.cache.outputs.cache-hit != 'true' || inputs.caching == 'true'
       run: npm ci
       shell: bash
