@@ -12,7 +12,7 @@ jobs:
       - name: Load and Cache dependencies
         uses: ./.github/actions/cache-deps
         with:
-          catching: 'true'
+          caching: 'true'
       - name: Lint code
         run: npm run lint
   test:
@@ -24,7 +24,7 @@ jobs:
         id: load
         uses: ./.github/actions/cache-deps
         with:
-          catching: 'false'
+          caching: 'false'
       - name: Ouput Info
         run: echo 'Ouput Info ${{ steps.load.ouputs.used-cache }}'
       - name: Test code
@@ -45,7 +45,7 @@ jobs:
       - name: Load and Cache dependencies
         uses: ./.github/actions/cache-deps
         with:
-          catching: 'true'        
+          caching: 'true'        
       - name: Build website
         run: npm run build
       - name: Upload artifacts
