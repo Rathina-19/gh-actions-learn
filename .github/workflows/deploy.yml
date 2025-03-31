@@ -26,7 +26,7 @@ jobs:
         with:
           caching: 'false'
       - name: Ouput Info
-        run: echo 'Ouput Info ${{ steps.load.ouputs.used-cache }}'
+        run: echo "Ouput Info ${{ steps.load.ouputs.used-cache }}"
       - name: Test code
         id: run-tests
         run: npm run test
